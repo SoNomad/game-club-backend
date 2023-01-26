@@ -22,6 +22,7 @@ mongoose
   });
 
 app.use(require("./routes/seat.routes"));
+app.use(require("./routes/booking.routes"));
 
 app.listen(PORT, (err) => {
   if (err) {

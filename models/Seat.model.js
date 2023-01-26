@@ -6,20 +6,8 @@ const seatSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  booking: [
-    {
-      player: { type: String },
-      date: {
-        type: Date,
-      },
-      hours: {
-        type: String,
-      },
-      price: Number,
-    },
-  ],
 });
 
-const Seat = mongoose.model("Seats", seatSchema);
+const Seat = mongoose.model("seat", seatSchema);
 
 module.exports = Seat;

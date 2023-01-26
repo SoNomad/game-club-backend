@@ -5,7 +5,8 @@ const authorization = require("../auth");
 const router = Router();
 
 router.post("/add", seatControllers.addSeat);
-router.get("/seats", seatControllers.getSeats);
-router.patch("/bookingSeat/:id", seatControllers.bookingSeat);
+router.get("/seat", seatControllers.getSeats);
+router.get("/seat/:id", seatControllers.getSeat);
+router.delete("/seat/:id", seatControllers.deleteSeat);
 
 module.exports = router;

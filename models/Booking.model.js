@@ -1,16 +1,19 @@
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-// const bookingSchema = new mongoose.Schema({
-//   player: { type: String },
-//   date: {
-//     type: Date,
-//   },
-//   hours: {
-//     type: String,
-//   },
-//   price: Number,
-// });
+const bookingSchema = new mongoose.Schema({
+  seat: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "seat",
+  },
+  player: { type: String },
+  date: {
+    type: Date,
+  },
+  hours: {
+    type: String,
+  },
+});
 
-// const Booking = mongoose.model("Booking", bookingSchema);
+const Booking = mongoose.model("booking", bookingSchema);
 
-// module.exports = Booking;
+module.exports = Booking;
