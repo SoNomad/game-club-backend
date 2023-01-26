@@ -6,12 +6,19 @@ const deviceSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  periods: {
-    type: String,
-    required: true,
-  },
+  periods: [
+    {
+      time: {
+        type: String,
+      },
+      user: {
+        ref: "Users",
+        type: mongoose.Schema.Types.ObjectId,
+      },
+    },
+  ],
 });
 
-const Device = mongoose.model("Device", deviceSchema);
+const Device = mongoose.model("Devices", deviceSchema);
 
 module.exports = Device;
