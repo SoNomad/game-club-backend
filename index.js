@@ -1,13 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
-const PORT = process.env.PORT || 5000;
-
 app.use(cors());
+app.use(morgan("dev"));
 app.use(express.json());
+
+const PORT = process.env.PORT || 5000;
 
 mongoose.set("strictQuery", false);
 mongoose
@@ -18,6 +20,8 @@ mongoose
   .catch((e) => {
     console.log(e.toString());
   });
+
+app.use(require("./routes/seat.routes"));
 
 app.listen(PORT, (err) => {
   if (err) {
