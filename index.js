@@ -15,18 +15,18 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => {
-    console.log("База подключена");
+    console.log('База подключена')
   })
   .catch((e) => {
-    console.log(e.toString());
-  });
+    console.log(e.toString())
+  })
 
 app.use(require("./routes/seat.routes"));
 app.use(require("./routes/booking.routes"));
 
 app.listen(PORT, (err) => {
   if (err) {
-    return console.log(err.toString());
+    return console.log(err.toString())
   }
-  console.log(`Сервер запущен на порту ${PORT}`);
-});
+  console.log(`Сервер запущен на порту ${PORT}`)
+})
