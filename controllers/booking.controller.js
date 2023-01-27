@@ -1,30 +1,47 @@
-const Booking = require('../models/Booking.model')
+const Booking = require("../models/Booking.model");
 
-const BookingController = {
-  printBooking: async (req, res) => {
+module.exports.bookingControllers = {
+  addBooking: async (req, res) => {
+    const seat_id = req.params.id;
+    const { player, date, hours } = req.body;
+
+    //проверка на наличие брони на данную дату и время*****************//
+    const isExsist = await Booking.find({ seat: seat_id });
+    if (
+      isExsist.some((item) => item.date.toISOString().slice(0, 10) === date && item.hours === hours)
+    )
+      return res.json(`Время ${hours} в дату ${date} занято`);
+    //**************************************************************//
     try {
-      const booking = await Booking.find()
-      res.json(booking)
-    } catch (err) {
-      res.json({ error: err.message })
+      const bookingData = await Booking.create({
+        seat: seat_id,
+        player,
+        date,
+        hours,
+      });
+      res.json(bookingData);
+    } catch (error) {
+      res.json(error.message);
     }
   },
 
-  createBooking: async (req, res) => {
+  //получение всех броней
+  getBooking: async (req, res) => {
     try {
-      const booking = await Booking.create({
-        userId: req.body.userId,
-        numberDevice: req.body.numberDevice,
-        nameUser: req.body.nameUser,
-        numberUser: req.body.numberUser,
-        date: req.body.date,
-        time: req.body.time,
-      })
-      res.json(booking)
-    } catch (err) {
-      res.json({ error: err.message })
+      const booking = await Booking.find().populate("seat", "platformType");
+      res.json(booking);
+    } catch (error) {
+      res.json(error.message);
     }
   },
-}
 
-module.exports = BookingController
+  //удаление брони
+  deleteBooking: async (req, res) => {
+    try {
+      await Booking.findByIdAndRemove({ _id: req.body.id });
+      res.json("Запись на очередь удалена");
+    } catch (error) {
+      res.json(error.message);
+    }
+  },
+};

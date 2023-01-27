@@ -1,21 +1,17 @@
-const express = require('express')
-const mongoose = require('mongoose')
-require('dotenv').config()
-const cors = require('cors')
-const morgan = require('morgan')
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
+const morgan = require("morgan");
+const cors = require("cors");
+const app = express();
 
-const app = express()
-app.use(express.json())
-app.use('/upload', express.static('upload'))
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.json());
 
-app.use(cors())
-app.use(morgan('dev'))
+const PORT = process.env.PORT || 5000;
 
-app.use(require('./routes/booking.route'))
-
-app.use(require('./routes/user.routes'))
-
-const PORT = process.env.PORT || 5000
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_DB)
   .then(() => {
@@ -24,6 +20,9 @@ mongoose
   .catch((e) => {
     console.log(e.toString())
   })
+
+app.use(require("./routes/seat.routes"));
+app.use(require("./routes/booking.routes"));
 
 app.listen(PORT, (err) => {
   if (err) {
