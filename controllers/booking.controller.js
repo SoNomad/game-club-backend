@@ -7,6 +7,7 @@ module.exports.bookingControllers = {
 
     //проверка на наличие брони на данную дату и время*****************//
     const isExsist = await Booking.find({ seat: seat_id });
+
     if (
       isExsist.some((item) => item.date.toISOString().slice(0, 10) === date && item.hours === hours)
     )
