@@ -39,9 +39,12 @@ module.exports.seatControllers = {
         return res.json("Платформа с таким именем не добавлена!");
       }
 
-      const bookings = await Booking.find({ seat: req.params.id });
+      const bookings = await Booking.find(
+        { seat: req.params.id },
+        { seat: 1, player: 1, date: 1, hours: 1 }
+      ).populate("seat");
 
-      const result = { seat, bookings };
+      const result = { bookings };
 
       res.json(result);
     } catch (error) {
