@@ -1,5 +1,5 @@
-const Booking = require("../models/Booking.model");
-const Seat = require("../models/Seat.model");
+const Booking = require('../models/Booking.model');
+const Seat = require('../models/Seat.model');
 
 module.exports.seatControllers = {
   addSeat: async (req, res) => {
@@ -36,13 +36,13 @@ module.exports.seatControllers = {
       const seat = await Seat.findById(req.params.id);
 
       if (seat.length === 0) {
-        return res.json("Платформа с таким именем не добавлена!");
+        return res.json('Платформа с таким именем не добавлена!');
       }
 
       const bookings = await Booking.find(
         { seat: req.params.id },
         { seat: 1, player: 1, date: 1, hours: 1 }
-      ).populate("seat");
+      ).populate('seat');
 
       const result = { bookings };
 
@@ -57,7 +57,7 @@ module.exports.seatControllers = {
       await Booking.deleteMany({ seat: req.params.id });
       await Seat.findByIdAndDelete(req.params.id);
 
-      res.json("success");
+      res.json('success');
     } catch (error) {
       res.json(error.message);
     }

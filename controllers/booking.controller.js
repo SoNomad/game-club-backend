@@ -1,4 +1,4 @@
-const Booking = require("../models/Booking.model");
+const Booking = require('../models/Booking.model');
 
 module.exports.bookingControllers = {
   addBooking: async (req, res) => {
@@ -20,7 +20,7 @@ module.exports.bookingControllers = {
         date,
         hours,
       });
-      res.json(bookingData);
+      res.json(`Вы забронировали период с ${bookingData.hours} в дату ${bookingData.date}`);
     } catch (error) {
       res.json(error.message);
     }
@@ -29,7 +29,7 @@ module.exports.bookingControllers = {
   //получение всех броней
   getBooking: async (req, res) => {
     try {
-      const booking = await Booking.find().populate("seat", "platformType");
+      const booking = await Booking.find().populate('seat', 'platformType');
       res.json(booking);
     } catch (error) {
       res.json(error.message);
@@ -40,7 +40,7 @@ module.exports.bookingControllers = {
   deleteBooking: async (req, res) => {
     try {
       await Booking.findByIdAndRemove({ _id: req.body.id });
-      res.json("Запись на очередь удалена");
+      res.json('Запись на очередь удалена');
     } catch (error) {
       res.json(error.message);
     }
